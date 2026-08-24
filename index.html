@@ -820,22 +820,27 @@
   .contact-line .k{ color:var(--foil-gold); font-family:'IBM Plex Mono', monospace; font-size:12px; text-transform:uppercase; letter-spacing:0.1em; width:90px; flex-shrink:0; }
 
   .form-card{
-    background:var(--paper-white); padding:40px; position:relative;
+    background:rgba(251,254,255,0.08);
+    -webkit-backdrop-filter:blur(14px);
+    backdrop-filter:blur(14px);
+    border:1px solid rgba(251,254,255,0.16);
+    padding:40px; position:relative;
     border-radius:22px; box-shadow:0 40px 80px -30px rgba(0,0,0,.5);
   }
   .form-card::before{ content:""; position:absolute; top:0; left:0; right:0; height:4px; border-radius:22px 22px 0 0; background:linear-gradient(90deg,var(--burgundy),var(--foil-gold),var(--stamp-teal)); }
-  .form-card h3{ font-size:21px; margin-bottom:6px; }
-  .form-card .sub{ font-size:13.5px; color:#8a8880; margin-bottom:26px; }
+  .form-card h3{ color:var(--paper-white); font-size:21px; margin-bottom:6px; }
+  .form-card .sub{ font-size:13.5px; color:rgba(251,254,255,.62); margin-bottom:26px; }
   .field{ margin-bottom:18px; }
-  .field label{ display:block; font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#8a8880; margin-bottom:7px; }
+  .field label{ display:block; font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:rgba(251,254,255,.5); margin-bottom:7px; }
   .field input{
-    width:100%; border:1.5px solid var(--line); border-radius:12px; background:var(--paper);
-    padding:13px 15px; font-size:15.5px; font-family:'IBM Plex Sans', sans-serif; color:var(--ink-black);
+    width:100%; border:1.5px solid rgba(251,254,255,.2); border-radius:12px; background:rgba(251,254,255,.08);
+    padding:13px 15px; font-size:15.5px; font-family:'IBM Plex Sans', sans-serif; color:var(--paper-white);
     transition:border-color .25s ease, background .25s ease;
   }
-  .field input:focus{ outline:none; border-color:var(--burgundy); background:var(--paper-white); }
-  .consent{ font-size:12px; color:#8a8880; margin:20px 0 22px; line-height:1.5; }
-  .consent a{ color:var(--burgundy); }
+  .field input::placeholder{ color:rgba(251,254,255,.4); }
+  .field input:focus{ outline:none; border-color:var(--foil-gold); background:rgba(251,254,255,.14); }
+  .consent{ font-size:12px; color:rgba(251,254,255,.5); margin:20px 0 22px; line-height:1.5; }
+  .consent a{ color:var(--foil-gold); }
   .form-card .btn{ width:100%; }
 
   /* ---------- footer ---------- */
@@ -974,34 +979,20 @@
     .step p{ font-size:13px; }
 
     /* contact: on desktop the video shows through the transparent left column;
-       stacked on mobile the solid form card ends up covering the whole video
-       area, so make the card a translucent panel instead of a flat opaque
-       one, and lighten the scrim so the footage stays visible behind it.
-       The plain rgba background (not just the blur) is what actually shows
-       the video through, so it still works on browsers/modes that don't
-       support backdrop-filter (e.g. Opera's data-saving mode). */
+       lighten the scrim on mobile too so the footage stays visible behind
+       the now-glass form card once everything stacks into one column */
     .contact-scrim{
       background:
         linear-gradient(100deg, rgba(15,27,42,.7) 0%, rgba(15,27,42,.46) 40%, rgba(15,27,42,.22) 70%, rgba(15,27,42,.42) 100%),
         linear-gradient(to top, rgba(12,22,35,.55) 0%, rgba(12,22,35,0) 42%) !important;
     }
     .form-card{
-      background:rgba(251,254,255,0.68);
-      -webkit-backdrop-filter:blur(16px);
-      backdrop-filter:blur(16px);
       padding:18px 16px;
       border-radius:16px;
     }
     .form-card::before{ height:3px; border-radius:16px 16px 0 0; }
-    /* keep the form itself easy to read/use even with a busy video showing
-       through the translucent card behind it: darken the light-grey text a
-       touch and give it a soft white halo so it stays legible over motion */
-    .form-card .sub, .field label, .consent{
-      color:#5b5850;
-      text-shadow:0 0 2px rgba(255,255,255,.9), 0 1px 4px rgba(255,255,255,.8);
-    }
     .form-card .sub{ font-size:12.5px; margin-bottom:16px; }
-    .field input{ border-radius:10px; background:rgba(255,255,255,0.95); padding:10px 12px; font-size:14px; }
+    .field input{ border-radius:10px; padding:10px 12px; font-size:14px; }
     .form-card h3{ font-size:18px; margin-bottom:4px; }
     .field{ margin-bottom:11px; }
     .field label{ font-size:10px; margin-bottom:5px; }
