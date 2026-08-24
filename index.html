@@ -109,17 +109,25 @@
     position:sticky; top:0; z-index:50;
     background:rgba(227,240,250,0.92);
     backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
+    -webkit-backdrop-filter:blur(8px);
+    box-shadow:0 10px 26px -20px rgba(22,40,61,.4);
+  }
+  header::after{
+    content:""; display:block; height:2px;
+    background:linear-gradient(90deg,var(--burgundy),var(--foil-gold),var(--stamp-teal));
+    opacity:.6;
   }
   .nav{
     display:flex; align-items:center; justify-content:space-between;
     padding:16px 32px;
     max-width:1180px; margin:0 auto;
+    position:relative;
   }
   .logo{
     display:flex; align-items:center; gap:10px;
     font-family:'Fraunces', serif; font-weight:700; font-size:21px;
     color:var(--ink-navy); text-decoration:none;
+    letter-spacing:-0.01em;
   }
   .logo-mark{
     width:34px;height:34px; border-radius:50%;
@@ -128,6 +136,7 @@
     font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600;
     color:var(--burgundy); transform:rotate(-8deg);
     flex-shrink:0;
+    background:rgba(122,35,49,.05);
   }
   .nav-links{ display:flex; gap:30px; list-style:none; margin:0; padding:0; }
   .nav-links a{
@@ -185,8 +194,18 @@
   }
   .btn--ghost:hover{ background:var(--ink-navy); color:var(--paper-white); transform:none; box-shadow:none; }
   .btn--on-navy{ box-shadow:2px 2px 0 var(--foil-gold); }
-  .menu-toggle{ display:none; background:none; border:none; padding:6px; }
-  .menu-toggle span{ display:block; width:24px; height:2px; background:var(--ink-navy); margin:5px 0; }
+  .menu-toggle{
+    display:none; background:none; border:none; padding:6px;
+    position:relative; z-index:2;
+  }
+  .menu-toggle span{
+    display:block; width:24px; height:2px; background:var(--ink-navy); margin:5px 0;
+    transition:transform .28s ease, opacity .2s ease;
+  }
+  .menu-toggle.is-open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .menu-toggle.is-open span:nth-child(2){ opacity:0; }
+  .menu-toggle.is-open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+  .nav-links__phone{ display:none; }
 
   /* ================= HERO ================= */
   @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
@@ -844,6 +863,34 @@
     .cloud-field .chat-card:nth-child(2){ margin-top:24px; }
     .cloud-field .chat-card:nth-child(3){ margin-top:0; }
     section{ padding:64px 0; }
+
+    /* mobile/tablet dropdown menu: a proper card instead of a bare list —
+       accent stripe to match the form/document motif, soft shadow, divided
+       rows, and a slide/fade-in so opening it feels intentional */
+    .nav-links{
+      position:absolute; top:calc(100% + 10px); left:12px; right:12px;
+      flex-direction:column; gap:0;
+      background:var(--paper-white);
+      border-radius:16px;
+      border:1px solid var(--line);
+      box-shadow:0 26px 50px -22px rgba(22,40,61,.4);
+      padding:8px 20px 12px;
+      overflow:hidden;
+    }
+    .nav-links::before{
+      content:""; display:block; height:3px; margin:0 -20px 10px;
+      background:linear-gradient(90deg,var(--burgundy),var(--foil-gold),var(--stamp-teal));
+    }
+    .nav-links.is-open{ display:flex; animation:navDrop .25s ease; }
+    @keyframes navDrop{ from{ opacity:0; transform:translateY(-8px); } to{ opacity:1; transform:translateY(0); } }
+    .nav-links li{ border-top:1px solid var(--line); }
+    .nav-links li:first-child{ border-top:none; }
+    .nav-links a{ display:block; padding:13px 2px; font-size:15px; }
+    .nav-links a::after{ display:none; }
+    .nav-links__phone{ display:block; }
+    .nav-links__phone a{
+      font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--burgundy);
+    }
   }
   @media (max-width:600px){
     .wrap{ padding:0 20px; }
@@ -942,8 +989,10 @@
       background:rgba(251,254,255,0.68);
       -webkit-backdrop-filter:blur(16px);
       backdrop-filter:blur(16px);
-      padding:22px 20px;
+      padding:18px 16px;
+      border-radius:16px;
     }
+    .form-card::before{ height:3px; border-radius:16px 16px 0 0; }
     /* keep the form itself easy to read/use even with a busy video showing
        through the translucent card behind it: darken the light-grey text a
        touch and give it a soft white halo so it stays legible over motion */
@@ -951,10 +1000,13 @@
       color:#5b5850;
       text-shadow:0 0 2px rgba(255,255,255,.9), 0 1px 4px rgba(255,255,255,.8);
     }
-    .field input{ background:rgba(255,255,255,0.95); padding:11px 13px; font-size:14.5px; }
-    .form-card h3{ font-size:19px; }
-    .field{ margin-bottom:14px; }
-    .consent{ margin:14px 0 16px; }
+    .form-card .sub{ font-size:12.5px; margin-bottom:16px; }
+    .field input{ border-radius:10px; background:rgba(255,255,255,0.95); padding:10px 12px; font-size:14px; }
+    .form-card h3{ font-size:18px; margin-bottom:4px; }
+    .field{ margin-bottom:11px; }
+    .field label{ font-size:10px; margin-bottom:5px; }
+    .consent{ font-size:11px; margin:11px 0 13px; }
+    .form-card .btn{ padding:11px 20px; }
 
     /* content blocks (not their headings) that are still desktop-sized on a
        phone: the "почему ПаспортОк" reason rows, the tariff/price cards,
@@ -997,6 +1049,7 @@
       <li><a href="#steps">Как это работает</a></li>
       <li><a href="#reviews">Отзывы</a></li>
       <li><a href="#contact">Контакты</a></li>
+      <li class="nav-links__phone"><a href="tel:+79096664433">+7 909 666-44-33</a></li>
     </ul>
     <div class="nav-cta">
       <a class="phone-link" href="tel:+79096664433">+7 909 666-44-33</a>
@@ -1437,10 +1490,15 @@
   // mobile nav toggle
   const toggle = document.querySelector('.menu-toggle');
   const links = document.querySelector('.nav-links');
-  toggle?.addEventListener('click', () => {
-    const open = links.style.display === 'flex';
-    links.style.display = open ? 'none' : 'flex';
-    links.style.cssText += open ? '' : 'position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--paper);padding:20px 32px;gap:16px;border-bottom:1px solid var(--line);';
+  function setMenu(open){
+    links.classList.toggle('is-open', open);
+    toggle.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  }
+  toggle?.addEventListener('click', () => setMenu(!links.classList.contains('is-open')));
+  links?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('click', e => {
+    if(links.classList.contains('is-open') && !e.target.closest('.nav')) setMenu(false);
   });
 
   // FAQ accordion
