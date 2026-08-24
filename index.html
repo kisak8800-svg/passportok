@@ -888,6 +888,44 @@
       margin-top:0 !important;
       --r:0deg;
     }
+    /* header: phone number + button + burger don't fit a phone screen at full
+       desktop size, so shrink everything and drop the header phone number
+       (it's still reachable via the hero button, the contact section, and the
+       footer, and the tel: link works from anywhere in the drawer/menu too) */
+    .nav{ padding:12px 16px; }
+    .logo{ font-size:16px; gap:7px; }
+    .logo-mark{ width:28px; height:28px; font-size:9.5px; }
+    .nav-cta{ gap:8px; }
+    .nav-cta .phone-link{ display:none; }
+    .nav-cta .btn{ padding:9px 15px; font-size:12px; }
+    .menu-toggle{ padding:4px; }
+    .menu-toggle span{ width:20px; margin:4px 0; }
+
+    /* overall scale-down: text/spacing sized for a 60px-tall desktop headline
+       reads as oversized on a narrow phone once pinch-zoom is disabled */
+    .hero-content h1{ font-size:clamp(30px, 8.5vw, 42px); margin-bottom:18px; }
+    .hero-content p.lede{ font-size:15.5px; margin-bottom:26px; }
+    .hero-eyebrow{ font-size:11.5px; margin-bottom:16px; }
+    .section-head h2{ font-size:clamp(22px, 6.5vw, 30px); }
+    .page-label{ font-size:11px; margin-bottom:14px; }
+    section{ padding:48px 0; }
+    .btn{ padding:12px 22px; font-size:13.5px; }
+
+    /* contact: on desktop the video shows through the transparent left column;
+       stacked on mobile the solid form card ends up covering the whole video
+       area, so make the card a frosted glass panel instead of a flat opaque
+       one, and lighten the scrim so the footage stays visible behind it */
+    .contact-scrim{
+      background:
+        linear-gradient(100deg, rgba(15,27,42,.82) 0%, rgba(15,27,42,.6) 40%, rgba(15,27,42,.3) 70%, rgba(15,27,42,.55) 100%),
+        linear-gradient(to top, rgba(12,22,35,.7) 0%, rgba(12,22,35,0) 42%) !important;
+    }
+    .form-card{
+      background:rgba(251,254,255,0.86);
+      -webkit-backdrop-filter:blur(16px);
+      backdrop-filter:blur(16px);
+      padding:28px 24px;
+    }
   }
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
