@@ -903,29 +903,51 @@
 
     /* overall scale-down: text/spacing sized for a 60px-tall desktop headline
        reads as oversized on a narrow phone once pinch-zoom is disabled */
-    .hero-content h1{ font-size:clamp(30px, 8.5vw, 42px); margin-bottom:18px; }
-    .hero-content p.lede{ font-size:15.5px; margin-bottom:26px; }
-    .hero-eyebrow{ font-size:11.5px; margin-bottom:16px; }
-    .section-head h2{ font-size:clamp(22px, 6.5vw, 30px); }
-    .page-label{ font-size:11px; margin-bottom:14px; }
-    section{ padding:48px 0; }
-    .btn{ padding:12px 22px; font-size:13.5px; }
+    .hero-content h1{ font-size:clamp(28px, 8vw, 38px); margin-bottom:16px; }
+    .hero-content p.lede{ font-size:15px; margin-bottom:22px; }
+    .hero-eyebrow{ font-size:11px; margin-bottom:14px; }
+    .section-head h2{ font-size:clamp(20px, 6vw, 27px); }
+    .section-head p{ font-size:14px; }
+    .page-label{ font-size:10.5px; margin-bottom:12px; }
+    section{ padding:40px 0; }
+    .btn{ padding:11px 20px; font-size:13px; }
+
+    /* steps ("пять шагов от заявки до паспорта в руках"): the gate circles,
+       card padding and gaps were all sized for desktop and end up making
+       this block noticeably taller/bigger than the rest of the page on a
+       phone — scale everything here down to match */
+    .steps{ padding-top:4px; }
+    .steps::before{ left:22px; }
+    .flight-marker{ left:22px; width:14px; }
+    .step{ grid-template-columns:44px 1fr; gap:14px; padding-bottom:22px; }
+    .step .gate{ width:44px; height:44px; font-size:12px; }
+    .step .gate::before{ inset:-4px; }
+    .step-body{ padding:14px 16px; border-radius:12px; }
+    .step h3{ font-size:16px; margin-bottom:4px; }
+    .step p{ font-size:13px; }
 
     /* contact: on desktop the video shows through the transparent left column;
        stacked on mobile the solid form card ends up covering the whole video
-       area, so make the card a frosted glass panel instead of a flat opaque
-       one, and lighten the scrim so the footage stays visible behind it */
+       area, so make the card a translucent panel instead of a flat opaque
+       one, and lighten the scrim so the footage stays visible behind it.
+       The plain rgba background (not just the blur) is what actually shows
+       the video through, so it still works on browsers/modes that don't
+       support backdrop-filter (e.g. Opera's data-saving mode). */
     .contact-scrim{
       background:
-        linear-gradient(100deg, rgba(15,27,42,.82) 0%, rgba(15,27,42,.6) 40%, rgba(15,27,42,.3) 70%, rgba(15,27,42,.55) 100%),
-        linear-gradient(to top, rgba(12,22,35,.7) 0%, rgba(12,22,35,0) 42%) !important;
+        linear-gradient(100deg, rgba(15,27,42,.7) 0%, rgba(15,27,42,.46) 40%, rgba(15,27,42,.22) 70%, rgba(15,27,42,.42) 100%),
+        linear-gradient(to top, rgba(12,22,35,.55) 0%, rgba(12,22,35,0) 42%) !important;
     }
     .form-card{
-      background:rgba(251,254,255,0.86);
+      background:rgba(251,254,255,0.55);
       -webkit-backdrop-filter:blur(16px);
       backdrop-filter:blur(16px);
       padding:28px 24px;
     }
+    /* keep the form itself easy to read/use even with a busy video showing
+       through the translucent card behind it */
+    .form-card .sub, .field label, .consent{ text-shadow:0 1px 3px rgba(255,255,255,.7); }
+    .field input{ background:rgba(255,255,255,0.92); }
   }
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
