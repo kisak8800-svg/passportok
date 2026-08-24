@@ -939,15 +939,41 @@
         linear-gradient(to top, rgba(12,22,35,.55) 0%, rgba(12,22,35,0) 42%) !important;
     }
     .form-card{
-      background:rgba(251,254,255,0.55);
+      background:rgba(251,254,255,0.68);
       -webkit-backdrop-filter:blur(16px);
       backdrop-filter:blur(16px);
-      padding:28px 24px;
+      padding:22px 20px;
     }
     /* keep the form itself easy to read/use even with a busy video showing
-       through the translucent card behind it */
-    .form-card .sub, .field label, .consent{ text-shadow:0 1px 3px rgba(255,255,255,.7); }
-    .field input{ background:rgba(255,255,255,0.92); }
+       through the translucent card behind it: darken the light-grey text a
+       touch and give it a soft white halo so it stays legible over motion */
+    .form-card .sub, .field label, .consent{
+      color:#5b5850;
+      text-shadow:0 0 2px rgba(255,255,255,.9), 0 1px 4px rgba(255,255,255,.8);
+    }
+    .field input{ background:rgba(255,255,255,0.95); padding:11px 13px; font-size:14.5px; }
+    .form-card h3{ font-size:19px; }
+    .field{ margin-bottom:14px; }
+    .consent{ margin:14px 0 16px; }
+
+    /* content blocks (not their headings) that are still desktop-sized on a
+       phone: the "почему ПаспортОк" reason rows, the tariff/price cards,
+       and the "Заказать звонок" form card above */
+    .reasons{ gap:0; }
+    .reason-row{ grid-template-columns:36px 1fr; gap:12px; padding:14px 4px; }
+    .reason-row .rn{ width:34px; height:34px; font-size:11px; }
+    .reason-row h3{ font-size:15.5px; margin-bottom:3px; }
+    .reason-row p{ font-size:13px; }
+
+    .tariff-tabs{ margin-bottom:22px; gap:8px; }
+    .tariff-tab{ padding:9px 16px; font-size:12.5px; }
+    .tariff-board{ gap:16px; }
+    .tariff-card .tc-body{ padding:20px 18px; }
+    .tariff-card .tag{ font-size:10.5px; padding:4px 10px; margin-bottom:10px; }
+    .tariff-card h3{ font-size:17px; margin-bottom:6px; }
+    .tariff-card p{ font-size:13px !important; }
+    .tariff-card .fee{ font-size:12.5px; padding-top:12px; margin-top:14px; }
+    .tariff-card .fee b{ font-size:16px; }
   }
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
