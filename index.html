@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no">
 <title>ПаспортОк — оформление загранпаспорта без очередей</title>
 <meta name="description" content="ПаспортОк — сопровождение при оформлении загранпаспорта: взрослым и детям, срочно и без ошибок. Звоните: +7 909 666-44-33">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +24,10 @@
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
+  html,body{
+    max-width:100%;
+    overflow-x:hidden;
+  }
   body{
     margin:0;
     background:var(--paper);
@@ -32,6 +36,7 @@
     font-size:16px;
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
+    touch-action:pan-x pan-y;
   }
   h1,h2,h3,h4{
     font-family:'Fraunces', serif;
@@ -865,13 +870,15 @@
     .cloud-field{
       display:flex; grid-template-columns:none;
       gap:14px;
-      padding:18px 20px 26px;
-      margin:0 -20px;
+      padding:44px 20px 56px;
+      margin:-26px -20px -30px;
       overflow-x:auto;
+      overflow-y:visible;
       scroll-snap-type:x mandatory;
       scroll-padding-left:20px;
       -webkit-overflow-scrolling:touch;
       scrollbar-width:none;
+      touch-action:pan-x;
     }
     .cloud-field::-webkit-scrollbar{ display:none; }
     .cloud-field .chat-card{
@@ -880,7 +887,6 @@
       scroll-snap-align:start;
       margin-top:0 !important;
       --r:0deg;
-      animation:none;
     }
   }
   @media (prefers-reduced-motion: reduce){
@@ -920,7 +926,7 @@
   <section class="hero">
 
     <div class="hero-media" aria-hidden="true">
-      <video autoplay muted loop playsinline>
+      <video class="js-autoplay-video" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto">
         <source src="hero-video.mp4" type="video/mp4">
       </video>
       <div class="hero-scrim"></div>
@@ -1298,7 +1304,7 @@
   <!-- ================= CONTACT ================= -->
   <section class="on-navy" id="contact">
     <div class="contact-media" aria-hidden="true">
-      <video autoplay muted loop playsinline>
+      <video class="js-autoplay-video" autoplay muted loop playsinline webkit-playsinline x5-playsinline preload="auto">
         <source src="contact-video.mp4" type="video/mp4">
       </video>
       <div class="contact-scrim"></div>
@@ -1603,6 +1609,28 @@
       media.addEventListener('mouseleave', () => { spot.style.opacity = 0; });
     }
   }
+
+  // robust autoplay: some mobile browsers (incl. Opera's data-saver mode) ignore the
+  // autoplay/muted HTML attributes, so force it via JS and retry on first user
+  // interaction if the initial play() call gets rejected.
+  (function(){
+    const vids = document.querySelectorAll('.js-autoplay-video');
+    if(!vids.length) return;
+    function tryPlay(v){
+      v.muted = true;
+      v.defaultMuted = true;
+      const p = v.play();
+      if(p && typeof p.catch === 'function'){ p.catch(() => {}); }
+    }
+    vids.forEach(v => {
+      if(v.readyState >= 2){ tryPlay(v); }
+      else{ v.addEventListener('loadedmetadata', () => tryPlay(v), { once:true }); }
+    });
+    const retry = () => { vids.forEach(v => { if(v.paused) tryPlay(v); }); };
+    ['touchstart','click','scroll'].forEach(evt => {
+      document.addEventListener(evt, retry, { passive:true, once:true });
+    });
+  })();
 </script>
 </body>
 </html>
